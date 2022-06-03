@@ -1,0 +1,142 @@
+C:\Users\Alunos> cd c:\xampp\mysql\bin
+c:\xampp\mysql\bin> -u root
+'-u' não é reconhecido como um comando interno
+ou externo, um programa operável ou um arquivo em lotes.
+
+c:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 46
+Server version: 10.4.17-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>MariaDB [(none)]>  show databases;
++--------------------+
+| Database           |
++--------------------+
+| exemplo            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> use exemplo;
+Database changed
+MariaDB [exemplo]> show tables;
++-------------------+
+| Tables_in_exemplo |
++-------------------+
+| produtos          |
++-------------------+
+1 row in set (0.001 sec)
+
+MariaDB [exemplo]> SELECT * FROM PRODUTOS;
++----+----------+-------+------+
+| id | nome     | valor | qtde |
++----+----------+-------+------+
+|  1 | Lápis    |  1.00 |   10 |
+|  2 | Borracha |  3.00 |   10 |
+|  3 | Caderno  | 15.00 |   10 |
++----+----------+-------+------+
+3 rows in set (0.001 sec)
+
+MariaDB [exemplo]>SELECT COUNT(NOME) FROM PRODUTOS;
++-------------+
+| COUNT(NOME) |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.001 sec)
+MariaDB [exemplo]> SELECT COUNT(*)AS TOTAL_REGISTROS FROM PRODUTOS;
++-----------------+
+| TOTAL_REGISTROS |
++-----------------+
+|               3 |
++-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [exemplo]>SELECT SUM(VALOR) AS TOTAL FROM PRODUTOS;
++-------+
+| TOTAL |
++-------+
+| 19.00 |
++-------+
+1 row in set (0.000 sec)
+
+MariaDB [exemplo]>SELECT AVG(VALOR) AS TOTAL FROM PRODUTOS;
++----------+
+| TOTAL    |
++----------+
+| 6.333333 |
++----------+
+1 row in set (0.000 sec)
+
+MariaDB [exemplo]>SELECT MAX(VALOR) AS TOTAL FROM PRODUTOS;
++-------+
+| TOTAL |
++-------+
+| 15.00 |
++-------+
+1 row in set (0.000 sec)
+
+MariaDB [exemplo]> SELECT * FROM PRODUTOS;
++----+----------+-------+------+
+| id | nome     | valor | qtde |
++----+----------+-------+------+
+|  1 | Lápis    |  1.00 |   10 |
+|  2 | Borracha |  3.00 |   10 |
+|  3 | Caderno  | 15.00 |   10 |
++----+----------+-------+------+
+3 rows in set (0.001 sec)
+
+MariaDB [exemplo]> SELECT * FROM PRODUTOS WHERE VALOR = 15;
++----+---------+-------+------+
+| id | nome    | valor | qtde |
++----+---------+-------+------+
+|  3 | Caderno | 15.00 |   10 |
++----+---------+-------+------+
+1 row in set (0.001 sec)
+
+MariaDB [exemplo]> SELECT * FROM PRODUTOS
+    -> WHERE VALOR = (SELECT MAX(VALOR) FROM PRODUTOS);
++----+---------+-------+------+
+| id | nome    | valor | qtde |
++----+---------+-------+------+
+|  3 | Caderno | 15.00 |   10 |
++----+---------+-------+------+
+1 row in set (0.002 sec)
+
+MariaDB [exemplo]> SELECT * FROM PRODUTOS
+    -> WHERE VALOR BETWEEN 1 AND 10;
++----+----------+-------+------+
+| id | nome     | valor | qtde |
++----+----------+-------+------+
+|  1 | Lápis    |  1.00 |   10 |
+|  2 | Borracha |  3.00 |   10 |
++----+----------+-------+------+
+2 rows in set (0.001 sec)
+
+MariaDB [exemplo]> SELECT * FROM PRODUTOS
+    -> WHERE VALOR IN(1,15);
++----+---------+-------+------+
+| id | nome    | valor | qtde |
++----+---------+-------+------+
+|  1 | Lápis   |  1.00 |   10 |
+|  3 | Caderno | 15.00 |   10 |
++----+---------+-------+------+
+2 rows in set (0.000 sec)
+
+MariaDB [exemplo]> SELECT * FROM PRODUTOS
+    -> WHERE NOME LIKE '_a%';
++----+---------+-------+------+
+| id | nome    | valor | qtde |
++----+---------+-------+------+
+|  1 | Lápis   |  1.00 |   10 |
+|  3 | Caderno | 15.00 |   10 |
++----+---------+-------+------+
+2 rows in set (0.000 sec)
