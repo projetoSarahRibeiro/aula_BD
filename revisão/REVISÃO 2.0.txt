@@ -1,0 +1,125 @@
+Microsoft Windows [versão 10.0.19043.1165]
+(c) Microsoft Corporation. Todos os direitos reservados.
+
+C:\Users\Alunos>cd c:\xampp\\mysql\bin
+
+c:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 38
+Server version: 10.4.17-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| revisao            |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> use revisao;
+Database changed
+MariaDB [revisao]> show tables;
++-------------------+
+| Tables_in_revisao |
++-------------------+
+| clientes          |
+| compras           |
+| produtos          |
++-------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [revisao]> DESCRIBE COMPRAS;
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| nf          | int(11) | NO   | PRI | NULL    | auto_increment |
+| data_compra | date    | YES  |     | NULL    |                |
+| id_cliente  | int(11) | YES  | MUL | NULL    |                |
+| codigo      | int(11) | YES  | MUL | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+4 rows in set (0.017 sec)
+
+MariaDB [revisao]>  DESCRIBE PRODUTOS;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| codigo       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nome_produto | varchar(255) | YES  |     | NULL    |                |
+| cor          | varchar(255) | YES  |     | NULL    |                |
+| preco        | decimal(5,2) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.018 sec)
+
+MariaDB [revisao]> SELECT p.nome_produto,p.cor
+    -> FROM produtos AS p;
++-----------------+--------------+
+| nome_produto    | cor          |
++-----------------+--------------+
+| CADERNO         | AZUL         |
+| LAPIS COLORIDO  | AMARELO      |
+| BORRACHA        | BRANCA       |
+| REGUA           | TRANSPARENTE |
+| PASTA DE FOLHAS | ROSA         |
+| PEN DRIVE       | PRETO        |
+| FICHARIO        | AZUL         |
++-----------------+--------------+
+7 rows in set (0.001 sec)
+
+MariaDB [revisao]> SELECT con.nf,con.data_compra,p.nome_produto
+    -> FROM produtos AS p, compras as con
+    -> WHERE p.codigo=con.codigo;
++----+-------------+----------------+
+| nf | data_compra | nome_produto   |
++----+-------------+----------------+
+|  1 | 2022-08-18  | CADERNO        |
+|  2 | 2022-08-18  | LAPIS COLORIDO |
+|  3 | 2022-08-18  | CADERNO        |
+|  4 | 2022-08-18  | REGUA          |
+|  5 | 2022-08-18  | REGUA          |
+|  6 | 2022-07-13  | PEN DRIVE      |
++----+-------------+----------------+
+6 rows in set (0.001 sec)
+
+MariaDB [revisao]> SELECT con.nf,con.data_compra,p.nome_produto
+    -> FROM produtos AS p, compras as con
+    -> WHERE p.codigo=con.codigo AND
+    -> p.codigo = 1;
++----+-------------+--------------+
+| nf | data_compra | nome_produto |
++----+-------------+--------------+
+|  1 | 2022-08-18  | CADERNO      |
+|  3 | 2022-08-18  | CADERNO      |
++----+-------------+--------------+
+2 rows in set (0.001 sec)
+
+MariaDB [revisao]>  SELECT * FROM PRODUTOS
+    -> WHERE COR LIKE "AZUL";
++--------+--------------+------+-------+
+| codigo | nome_produto | cor  | preco |
++--------+--------------+------+-------+
+|      1 | CADERNO      | AZUL | 15.75 |
+|      7 | FICHARIO     | AZUL | 15.00 |
++--------+--------------+------+-------+
+2 rows in set (0.001 sec)
+
+MariaDB [revisao]>  SELECT * FROM PRODUTOS
+    -> WHERE preco >10;
++--------+--------------+-------+-------+
+| codigo | nome_produto | cor   | preco |
++--------+--------------+-------+-------+
+|      1 | CADERNO      | AZUL  | 15.75 |
+|      6 | PEN DRIVE    | PRETO | 34.20 |
+|      7 | FICHARIO     | AZUL  | 15.00 |
++--------+--------------+-------+-------+
+3 rows in set (0.001 sec)
+
+MariaDB [revisao]>
